@@ -20,4 +20,8 @@ class Project extends Model
       'link'
     ];
 
+    public function type() {
+      return $this->belongsTo(Type::class);
+    }
+
 }
