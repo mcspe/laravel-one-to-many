@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
+use Illuminate\Support\Str;
+use App\Helpers\FunctionHelper;
 
 class ProjectController extends Controller
 {
@@ -48,11 +50,12 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $form_data = $request->all();
-        $form_data['slug'] = Project::generateSlug($form_data['title']);
+        $form_data['slug'] = FunctionHelper::generateUniqueSlug($form_data['title'], new Project());
 
-        if (array_key_exists('preview', $form_data)) {
-          $form_data['original_image_path'] = $request->file('preview')->getClientOriginalName();
-          $form_data['image_path'] = Storage::put('uploads', $form_data['preview']);
+        if ($request->hasFile('preview')) {
+
+          $form_data = FunctionHelper::saveImage('preview', $request, $form_data, new Project());
+
         }
 
         $new_project = new Project();
@@ -100,19 +103,19 @@ class ProjectController extends Controller
     {
         $form_data = $request->all();
         if ($form_data['title'] != $project->title) {
-          $form_data['slug'] =  Project::generateSlug($form_data['title']);
+          $form_data['slug'] = FunctionHelper::generateUniqueSlug($form_data['title'], new Project());
         } else {
           $form_data['slug'] = $project->slug;
         }
 
-        if (array_key_exists('preview', $form_data)) {
+        if ($request->hasFile('preview')) {
 
           if($project->image_path) {
             Storage::disk('public')->delete($project->image_path);
           }
 
-          $form_data['original_image_path'] = $request->file('preview')->getClientOriginalName();
-          $form_data['image_path'] = Storage::put('uploads', $form_data['preview']);
+          $form_data = FunctionHelper::saveImage('preview', $request, $form_data, new Project());
+
         }
 
         $project->update($form_data);

@@ -18,7 +18,6 @@ class Project extends Model
       'title',
       'slug',
       'image_path',
-      'original_image_path',
       'summary',
       'languages',
       'link'
