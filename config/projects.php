@@ -10,7 +10,7 @@
     [
       'title'=>'image carousel',
       'preview'=>'resources\img\array-carousel.png',
-      'summary'=>'Create an carousel display for a set of images using vanilla js',
+      'summary'=>'Create a carousel display for a set of images using vanilla js',
       'languages'=>'html|css|js',
       'link'=>'https://github.com/mcspe/js-array-carousel'
     ],

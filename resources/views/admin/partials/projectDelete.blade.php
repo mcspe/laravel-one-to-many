@@ -5,7 +5,7 @@
   <i class="fa-solid fa-trash"></i>
 </button>
 
-<div class="modal fade"
+<div class="modal fade text-black"
   id="deleteModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
