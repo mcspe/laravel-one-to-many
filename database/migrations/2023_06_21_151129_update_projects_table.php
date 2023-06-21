@@ -18,6 +18,8 @@ return new class extends Migration
 
           $table->unsignedBigInteger('type_id')->nullable()->after('id');
           $table->foreign('type_id')->references('id')->on('types')->onDelete('set null');
+
+          $table->timestamp('deleted_at')->nullable();
         });
     }
 
@@ -33,6 +35,8 @@ return new class extends Migration
 
           $table->dropForeign(['type_id']);
           $table->dropColumn('type_id');
+
+          $table->dropColumn('deleted_at');
         });
     }
 };
